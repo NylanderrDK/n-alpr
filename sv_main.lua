@@ -13,15 +13,28 @@ AddEventHandler("wk:onPlateScanned", function(cam, plate, index)
                 local vehInfo = QBCore.Shared.Vehicles[result[k].vehicle]
                 local owner = charinfo.firstname .. " " .. charinfo.lastname
 
-                if vehInfo ~= nil then
-                    local label = vehInfo["name"]
-                    TriggerClientEvent("qb-alpr:client:notify", src, plate, owner, label)
-                    exports.wk_wars2x:TogglePlateLock(src, cam, true, false)
-                else
-                    local label = "Name not found.."
-                    TriggerClientEvent("qb-alpr:client:notify", src, plate, owner, label)
-                    exports.wk_wars2x:TogglePlateLock(src, cam, true, false)
-                end
+                exports["oxmysql"]:execute("SELECT flags FROM player_vehicles WHERE plate = ?", { plate }, function(result)
+                    if string.len(json.encode(result)) > 2 then
+                        if result then
+                            for _, v in pairs(result) do
+                                local flags = v.flags
+                                local hasFlag = string.len(flags) < 1
+
+                                if not hasFlag then
+                                    if vehInfo ~= nil then
+                                        local label = vehInfo["name"]
+                                        TriggerClientEvent("qb-alpr:client:notify", src, plate, owner, label, flags)
+                                        exports.wk_wars2x:TogglePlateLock(src, cam, true, false)
+                                    else
+                                        local label = "Name not found.."
+                                        TriggerClientEvent("qb-alpr:client:notify", src, plate, owner, label, flags)
+                                        exports.wk_wars2x:TogglePlateLock(src, cam, true, false)
+                                    end 
+                                end
+                            end
+                        end
+                    end
+                end)
             end
         end
     end
