@@ -11,13 +11,15 @@ It gives you the plate, name of the owner, and vehicle label. In the future, you
 
 ## Requirements
 * [`wk_wars2x`](https://github.com/WolfKnight98/wk_wars2x)
-* [`qb-policejob`](https://github.com/qbcore-framework/qb-policejob)
+* [`qb-policejob (my version)`](https://github.com/NylanderrDK/qb-policejob/tree/main)
 * [`qb-core`](https://github.com/qbcore-framework/qb-core)
 
 ## Usage
-1) Start the plate reader (to view how take a look at the [official get started video](https://www.youtube-nocookie.com/embed/B-6VD8pXNYE))
-2) Scan a player's vehicle
-3) You should now see a notification pop up on your screen, if you are on duty as a cop
+1) Replace your `qb-policejob` resource with my version, and run the included `.sql` file.
+2) Ensure that you now have a `flags` column in your `player_vehicles` table.
+4) Start the plate reader (to view how take a look at the [official get started video](https://www.youtube-nocookie.com/embed/B-6VD8pXNYE))
+5) Scan a player's vehicle
+6) You should now see a notification pop up on your screen, if you are on duty as a cop
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change. Please make sure to update tests as appropriate.
